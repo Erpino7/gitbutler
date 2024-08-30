@@ -11,6 +11,7 @@ import { ModeService } from '$lib/modes/service';
 import { RemoteBranchService } from '$lib/stores/remoteBranches';
 import { UncommitedFilesWatcher } from '$lib/uncommitedFiles/watcher';
 import { BranchController } from '$lib/vbranches/branchController';
+import { UpstreamIntegrationService } from '$lib/vbranches/upstreamIntegrationService';
 import { VirtualBranchService } from '$lib/vbranches/virtualBranch';
 import { error } from '@sveltejs/kit';
 import type { Project } from '$lib/backend/projects';
@@ -78,6 +79,7 @@ export const load: LayoutLoad = async ({ params, parent }) => {
 	const reorderDropzoneManagerFactory = new ReorderDropzoneManagerFactory(branchController);
 
 	const uncommitedFileWatcher = new UncommitedFilesWatcher(project);
+	const upstreamIntegrationService = new UpstreamIntegrationService(project, vbranchService);
 
 	return {
 		authService,
@@ -91,6 +93,7 @@ export const load: LayoutLoad = async ({ params, parent }) => {
 		projectMetrics,
 		modeService,
 		fetchSignal,
+		upstreamIntegrationService,
 
 		// These observables are provided for convenience
 		branchDragActionsFactory,
