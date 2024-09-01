@@ -7,8 +7,9 @@
 # 4. ssh -p 2222 -Y root@localhost
 # 5. cd /root/gitbutler
 # 6. pnpm install && cargo build 
-# 7. pnpm build:test
-# 8. pnpm test:e2e
+# 7. cargo build -p gitbutler-git && cargo build -p gitbutler-cli
+# 8. pnpm build:test
+# 9. pnpm test:e2e
 
 FROM ubuntu:24.04
 
