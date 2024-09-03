@@ -1,8 +1,8 @@
 use super::r#virtual as branch;
-use crate::base::upstream_integration::{
-    upstream_integration_statuses, BranchStatuses, UpstreamIntegrationStatusesContext,
-};
 use crate::branch::get_uncommited_files_raw;
+use crate::upstream_integration::{
+    upstream_integration_statuses, BranchStatuses, UpstreamIntegrationContext,
+};
 use crate::{
     base::{
         get_base_branch_data, set_base_branch, set_target_push_remote, update_base_branch,
@@ -617,12 +617,11 @@ impl VirtualBranchActions {
 
     pub fn upstream_integration_statuses(&self, project: &Project) -> Result<BranchStatuses> {
         let command_context = CommandContext::open(project)?;
-        let guard = project.exclusive_worktree_access();
+        let mut guard = project.exclusive_worktree_access();
 
-        let context =
-            UpstreamIntegrationStatusesContext::open(&command_context, guard.read_permission())?;
+        let context = UpstreamIntegrationContext::open(&command_context, guard.write_permission())?;
 
-        upstream_integration_statuses(context)
+        upstream_integration_statuses(&context)
     }
 }
 

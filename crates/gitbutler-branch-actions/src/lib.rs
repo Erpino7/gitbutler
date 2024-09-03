@@ -8,8 +8,10 @@ pub use r#virtual::*;
 mod branch_manager;
 pub use branch_manager::{BranchManager, BranchManagerExt};
 
-pub mod base;
+mod base;
 pub use base::BaseBranch;
+
+pub mod upstream_integration;
 
 mod integration;
 pub use integration::{update_gitbutler_integration, verify_branch};

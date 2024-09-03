@@ -304,9 +304,10 @@ pub(crate) fn save_and_return_to_workspace(
             .context("Failed to update gitbutler integration")?;
 
         let rebased_stashed_integration_changes_commit = cherry_rebase_group(
-            ctx,
+            repository,
             integration_commit_oid,
-            &mut [stashed_integration_changes_commit.id()],
+            &[stashed_integration_changes_commit.id()],
+            true,
         )
         .context("Failed to rebase stashed integration commit changes")?;
 
