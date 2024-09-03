@@ -11,7 +11,7 @@ use gitbutler_command_context::CommandContext;
 use gitbutler_commit::commit_ext::CommitExt;
 use gitbutler_error::error::Marker;
 use gitbutler_project::access::WorktreeWritePermission;
-use gitbutler_repo::{LogUntil, RepoActionsExt, RepositoryExt};
+use gitbutler_repo::{LogUntil, RepositoryExt};
 use tracing::instrument;
 
 use crate::{branch_manager::BranchManagerExt, conflicts, VirtualBranchesExt};
@@ -323,6 +323,7 @@ fn verify_head_is_clean(ctx: &CommandContext, perm: &mut WorktreeWritePermission
         .context("failed to get default target")?;
 
     let commits = ctx
+        .repository()
         .log(head_commit.id(), LogUntil::Commit(default_target.sha))
         .context("failed to get log")?;
 
